@@ -10,6 +10,13 @@ app.get('/', function(req, res){
   res.render('index');
 });
 
+app.get('/signup', function(req, res){
+  res.render('index');
+});
+app.get('/signin', function(req, res){
+  res.render('index');
+});
+
 //Se escucha el servidor
 app.listen(3000, function(err){
   if(err) return console.log('Hubo un error'), process.exit(1);
