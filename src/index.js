@@ -3,6 +3,8 @@ const page = require('page');
 require('./homepage');
 //define la ruta para signup
 require('./signup');
+//define la ruta para signin
+require('./signin')
 
 //inicializar page
 page();
