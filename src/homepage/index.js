@@ -23,7 +23,7 @@ page('/', function(ctx, next){
         avatar: 'https://pbs.twimg.com/profile_images/867587108277538816/UnJj79Zi_400x400.jpg'
       },
       url: 'http://materializecss.com/images/office.jpg',
-      likes: 24,
+      likes: 0,
       liked: false,
       createdAt: new Date()
     },
@@ -33,7 +33,7 @@ page('/', function(ctx, next){
         avatar: 'https://pbs.twimg.com/profile_images/867587108277538816/UnJj79Zi_400x400.jpg'
       },
       url: 'http://materializecss.com/images/office.jpg',
-      likes: 4,
+      likes: 1,
       liked: false,
       createdAt: new Date().setDate(new Date().getDate()-10)
     },

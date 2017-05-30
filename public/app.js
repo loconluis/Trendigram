@@ -9535,7 +9535,7 @@ page('/', function (ctx, next) {
       avatar: 'https://pbs.twimg.com/profile_images/867587108277538816/UnJj79Zi_400x400.jpg'
     },
     url: 'http://materializecss.com/images/office.jpg',
-    likes: 24,
+    likes: 0,
     liked: false,
     createdAt: new Date()
   }, {
@@ -9544,7 +9544,7 @@ page('/', function (ctx, next) {
       avatar: 'https://pbs.twimg.com/profile_images/867587108277538816/UnJj79Zi_400x400.jpg'
     },
     url: 'http://materializecss.com/images/office.jpg',
-    likes: 4,
+    likes: 1,
     liked: false,
     createdAt: new Date().setDate(new Date().getDate() - 10)
   }, {
@@ -9628,32 +9628,20 @@ module.exports = function layout(content) {
 },{"yo-yo":36}],43:[function(require,module,exports){
 'use strict';
 
-var _templateObject = _taggedTemplateLiteral(['<div class="card ', '">\n                  <div class="card-image">\n                    <img class="activator" src="', '">\n                  </div>\n                  <div class="card-content">\n                    <a href="/', '" class="card-title">\n                      <img src="', '" class="avatar left" alt="img-user">\n                      <span class="username">', '</span>\n                    </a>\n                    <small class="right time">', '</small>\n                    <p>\n                      <a href="#" class="left" onclick=', '><i class="fa fa-heart-o" aria-hidden="true"></i></a>\n                      <a href="#" class="left" onclick=', '><i class="fa fa-heart" aria-hidden="true"></i></a>\n                      <span class="left likes">', ' me gusta</span>\n                    </p>\n                  </div>\n              </div>'], ['<div class="card ', '">\n                  <div class="card-image">\n                    <img class="activator" src="', '">\n                  </div>\n                  <div class="card-content">\n                    <a href="/', '" class="card-title">\n                      <img src="', '" class="avatar left" alt="img-user">\n                      <span class="username">', '</span>\n                    </a>\n                    <small class="right time">', '</small>\n                    <p>\n                      <a href="#" class="left" onclick=', '><i class="fa fa-heart-o" aria-hidden="true"></i></a>\n                      <a href="#" class="left" onclick=', '><i class="fa fa-heart" aria-hidden="true"></i></a>\n                      <span class="left likes">', ' me gusta</span>\n                    </p>\n                  </div>\n              </div>']);
+var _templateObject = _taggedTemplateLiteral(['<div class="card ', '">\n                  <div class="card-image">\n                    <img class="activator" src="', '">\n                  </div>\n                  <div class="card-content">\n                    <a href="/', '" class="card-title">\n                      <img src="', '" class="avatar left" alt="img-user">\n                      <span class="username">', '</span>\n                    </a>\n                    <small class="right time">', '</small>\n                    <p>\n                      <a href="#" class="left" onclick=', '><i class="fa fa-heart-o" aria-hidden="true"></i></a>\n                      <a href="#" class="left" onclick=', '><i class="fa fa-heart" aria-hidden="true"></i></a>\n                      <span class="left likes">', '</span>\n                    </p>\n                  </div>\n              </div>'], ['<div class="card ', '">\n                  <div class="card-image">\n                    <img class="activator" src="', '">\n                  </div>\n                  <div class="card-content">\n                    <a href="/', '" class="card-title">\n                      <img src="', '" class="avatar left" alt="img-user">\n                      <span class="username">', '</span>\n                    </a>\n                    <small class="right time">', '</small>\n                    <p>\n                      <a href="#" class="left" onclick=', '><i class="fa fa-heart-o" aria-hidden="true"></i></a>\n                      <a href="#" class="left" onclick=', '><i class="fa fa-heart" aria-hidden="true"></i></a>\n                      <span class="left likes">', '</span>\n                    </p>\n                  </div>\n              </div>']);
 
 function _taggedTemplateLiteral(strings, raw) {
   return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } }));
 }
 
 var yo = require('yo-yo');
-//Libreria soportada por la mayoria excepto safari, se lo asignamos a safari
-if (!window.Intl) {
-  window.Intl = require('intl'); // polyfill for `Intl`
-  require('intl/locale-data/jsonp/en-US.js');
-  require('intl/locale-data/jsonp/es.js');
-}
-//Para formatear fechas
-var IntlRelativeFormat = window.IntlRelativeFormat = require('intl-relativeformat');
-
-require('intl-relativeformat/dist/locale-data/en.js');
-require('intl-relativeformat/dist/locale-data/es.js');
-
-var rf = new IntlRelativeFormat('es');
+var translate = require('../translate');
 
 module.exports = function pictureCard(pic) {
   var el = void 0;
 
   function render(picture) {
-    return yo(_templateObject, picture.liked ? 'liked' : '', picture.url, picture.user.username, picture.user.avatar, picture.user.username, rf.format(picture.createdAt), like.bind(null, true), like.bind(null, false), picture.likes);
+    return yo(_templateObject, picture.liked ? 'liked' : '', picture.url, picture.user.username, picture.user.avatar, picture.user.username, translate.date.format(picture.createdAt), like.bind(null, true), like.bind(null, false), translate.message('likes', { likes: picture.likes }));
   }
 
   //funcion de like
@@ -9669,7 +9657,7 @@ module.exports = function pictureCard(pic) {
   return el;
 };
 
-},{"intl":25,"intl-relativeformat":19,"intl-relativeformat/dist/locale-data/en.js":17,"intl-relativeformat/dist/locale-data/es.js":18,"intl/locale-data/jsonp/en-US.js":27,"intl/locale-data/jsonp/es.js":28,"yo-yo":36}],44:[function(require,module,exports){
+},{"../translate":50,"yo-yo":36}],44:[function(require,module,exports){
 'use strict';
 
 var page = require('page');
@@ -9733,4 +9721,65 @@ var signupBox = yo(_templateObject);
 
 module.exports = landing(signupBox);
 
-},{"../landing":41,"yo-yo":36}]},{},[40]);
+},{"../landing":41,"yo-yo":36}],48:[function(require,module,exports){
+'use strict';
+
+module.exports = {
+        likes: '{likes, plural, ' + '=0 { no likes }' + '=1 { # like}' + 'other {# likes}}'
+};
+
+//0 > no likes
+//0 like
+//2 likes
+//3 likes
+//4 likes
+
+},{}],49:[function(require,module,exports){
+'use strict';
+
+module.exports = {
+  likes: '{ likes, number } me gusta'
+};
+
+//0 me gusta
+//1 me gusta
+//2 me gusta
+//3 me gusta
+
+},{}],50:[function(require,module,exports){
+'use strict';
+
+//Libreria soportada por la mayoria excepto safari, se lo asignamos a safari
+
+if (!window.Intl) {
+  window.Intl = require('intl'); // polyfill for `Intl`
+  require('intl/locale-data/jsonp/en-US.js');
+  require('intl/locale-data/jsonp/es.js');
+}
+//Para formatear fechas
+var IntlRelativeFormat = window.IntlRelativeFormat = require('intl-relativeformat');
+//Para formatear mensajes
+var IntlMessageFormat = require('intl-messageformat');
+
+require('intl-relativeformat/dist/locale-data/en.js');
+require('intl-relativeformat/dist/locale-data/es.js');
+
+var es = require('./es');
+var en = require('./en-US');
+
+var MESSAGES = {};
+MESSAGES['es'] = es;
+MESSAGES['en-US'] = en;
+var locale = 'en-US';
+
+//recibe el mensaje
+module.exports = {
+  message: function message(text, opts) {
+    opts = opts || {};
+    var msg = new IntlMessageFormat(MESSAGES[locale].likes, locale, null);
+    return msg.format(opts);
+  },
+  date: new IntlRelativeFormat(locale)
+};
+
+},{"./en-US":48,"./es":49,"intl":25,"intl-messageformat":10,"intl-relativeformat":19,"intl-relativeformat/dist/locale-data/en.js":17,"intl-relativeformat/dist/locale-data/es.js":18,"intl/locale-data/jsonp/en-US.js":27,"intl/locale-data/jsonp/es.js":28}]},{},[40]);
