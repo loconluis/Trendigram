@@ -1,5 +1,17 @@
-var yo = require('yo-yo');
-var moment = require('moment')
+let yo = require('yo-yo');
+//Libreria soportada por la mayoria excepto safari, se lo asignamos a safari
+if (!window.Intl) {
+   window.Intl = require('intl'); // polyfill for `Intl`
+   require('intl/locale-data/jsonp/en-US.js')
+   require('intl/locale-data/jsonp/es.js')
+}
+//Para formatear fechas
+let IntlRelativeFormat = window.IntlRelativeFormat = require('intl-relativeformat');
+
+require('intl-relativeformat/dist/locale-data/en.js');
+require('intl-relativeformat/dist/locale-data/es.js');
+
+let rf = new IntlRelativeFormat('es');
 
 module.exports = function pictureCard(pic){
   let el;
@@ -14,7 +26,7 @@ module.exports = function pictureCard(pic){
                       <img src="${picture.user.avatar}" class="avatar left" alt="img-user">
                       <span class="username">${picture.user.username}</span>
                     </a>
-                    <small class="right time">${moment(picture.createdAt).fromNow()}</small>
+                    <small class="right time">${rf.format(picture.createdAt)}</small>
                     <p>
                       <a href="#" class="left" onclick=${like.bind(null, true)}><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                       <a href="#" class="left" onclick=${like.bind(null, false)}><i class="fa fa-heart" aria-hidden="true"></i></a>
