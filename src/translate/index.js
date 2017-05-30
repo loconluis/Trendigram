@@ -18,13 +18,13 @@ let en = require('./en-US');
 let MESSAGES = {};
 MESSAGES['es'] = es;
 MESSAGES['en-US'] = en;
-let locale = 'en-US';
+let locale = localStorage.locale || 'es';
 
 //recibe el mensaje
 module.exports = {
     message: function(text, opts){
       opts = opts || {};
-      let msg = new IntlMessageFormat(MESSAGES[locale].likes, locale, null);
+      let msg = new IntlMessageFormat(MESSAGES[locale][text], locale, null);
       return msg.format(opts);
     },
     date: new IntlRelativeFormat(locale)

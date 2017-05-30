@@ -4,7 +4,9 @@ require('./homepage');
 //define la ruta para signup
 require('./signup');
 //define la ruta para signin
-require('./signin')
+require('./signin');
+//defie la ruta del footer
+require('./footer');
 
 //inicializar page
 page();
