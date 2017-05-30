@@ -7,6 +7,8 @@ require('./signup');
 require('./signin');
 //defie la ruta del footer
 require('./footer');
+//define el header
+require('./header')
 
 //inicializar page
 page();
