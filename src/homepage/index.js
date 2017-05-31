@@ -7,7 +7,7 @@ let request = require('superagent');
 let axios = require('axios');
 let header = require('../header');
 
-page('/', header, loadPicturesAxios, function(ctx, next){
+page('/', header, loadPicturesFetch, function(ctx, next){
   title('Trendigram');
   const main = document.getElementById('main-container');
   empty(main).appendChild(template(ctx.pictures));
@@ -37,4 +37,16 @@ function loadPicturesAxios(ctx, next){
     .catch(function (err){
       console.log(err);
     });
+}
+
+//usando fetch
+function loadPicturesFetch(ctx, next){
+  fetch('api/pictures')
+    .then(function(res){
+      return res.json();
+    })
+    .then(function(pictures){
+      ctx.pictures = pictures;
+      next();
+    })
 }
