@@ -1,3 +1,4 @@
+import "babel-polyfill";
 const page = require('page');
 //define la ruta para homepage
 require('./homepage');

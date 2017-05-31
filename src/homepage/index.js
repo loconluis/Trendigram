@@ -7,7 +7,7 @@ let request = require('superagent');
 let axios = require('axios');
 let header = require('../header');
 
-page('/', header, loadPicturesFetch, function(ctx, next){
+page('/', header, asyncLoad, function(ctx, next){
   title('Trendigram');
   const main = document.getElementById('main-container');
   empty(main).appendChild(template(ctx.pictures));
@@ -49,4 +49,14 @@ function loadPicturesFetch(ctx, next){
       ctx.pictures = pictures;
       next();
     })
+}
+
+//usando async await
+async function asyncLoad(ctx, next) {
+  try{
+    ctx.pictures = await fetch('/api/pictures').then(res => res.json());
+    next();
+  }catch(err){
+    return console.log(err);
+  }
 }
