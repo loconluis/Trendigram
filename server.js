@@ -1,5 +1,20 @@
 var express = require('express');
 var app = express();
+//Libreria para la carga de archivos MULTER en NPM
+var multer  = require('multer');
+var ext = require('file-extension');
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, +Date.now()+'.'+ext(file.originalname))
+  }
+})
+//storage donde se guardan las imagenes
+var upload = multer({ storage: storage }).single('picture')
+
 
 //El motor de vistas en express
 app.set('view engine', 'pug');
@@ -64,6 +79,15 @@ app.get('/api/pictures', function(req, res){
     res.send(pictures);
   }, 2000)
 });
+
+//Ruta donde se suben las fotos
+app.post('/api/pictures', function(req, res){
+  upload(req, res, function(err){
+    if(err){return res.send(500, 'ERROR uploading file');}
+
+    res.send('File Uploaded')
+  })
+})
 
 //Se escucha el servidor
 app.listen(3000, function(err){

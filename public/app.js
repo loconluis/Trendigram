@@ -21730,7 +21730,7 @@ function asyncLoad(ctx, next) {
 },{"../header":371,"./template":373,"axios":1,"empty-element":326,"page":356,"superagent":360,"title":367}],373:[function(require,module,exports){
 'use strict';
 
-var _templateObject = _taggedTemplateLiteral(['<div class="container timeline">\n  <div class="row">\n    <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">\n      <form enctype="multipart/form-data" class="form-upload" id="formUpload">\n        <div id="fileName" class="fileUpload btn btn-flat cyan">\n          <span><i class="fa fa-camera" aria-hidden="true"></i>', '</span>\n          <input name="picture" id="file" type="file" class="upload" onchange=', ' />\n        </div>\n        <button id="btnUpload" type="submit" class="btn btn-flat hide">', '</button>\n        <button id="btnCancel" type="button" class="btn btn-flat red hide" onclick=', '><i class="fa fa-times" aria-hidden="true"></i></button>\n      </form>\n    </div>\n  </div>\n    <div class="row">\n      <div class="col s12 m10 offset-m1 l6 offset-l3">\n        ', '\n      </div>\n    </div>\n  </div>'], ['<div class="container timeline">\n  <div class="row">\n    <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">\n      <form enctype="multipart/form-data" class="form-upload" id="formUpload">\n        <div id="fileName" class="fileUpload btn btn-flat cyan">\n          <span><i class="fa fa-camera" aria-hidden="true"></i>', '</span>\n          <input name="picture" id="file" type="file" class="upload" onchange=', ' />\n        </div>\n        <button id="btnUpload" type="submit" class="btn btn-flat hide">', '</button>\n        <button id="btnCancel" type="button" class="btn btn-flat red hide" onclick=', '><i class="fa fa-times" aria-hidden="true"></i></button>\n      </form>\n    </div>\n  </div>\n    <div class="row">\n      <div class="col s12 m10 offset-m1 l6 offset-l3">\n        ', '\n      </div>\n    </div>\n  </div>']);
+var _templateObject = _taggedTemplateLiteral(['<div class="container timeline">\n  <div class="row">\n    <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">\n      <form enctype="multipart/form-data" class="form-upload" id="formUpload" onsubmit=', '>\n        <div id="fileName" class="fileUpload btn btn-flat cyan">\n          <span><i class="fa fa-camera" aria-hidden="true"></i>', '</span>\n          <input name="picture" id="file" type="file" class="upload" onchange=', ' />\n        </div>\n        <button id="btnUpload" type="submit" class="btn btn-flat hide">', '</button>\n        <button id="btnCancel" type="button" class="btn btn-flat red hide" onclick=', '><i class="fa fa-times" aria-hidden="true"></i></button>\n      </form>\n    </div>\n  </div>\n    <div class="row">\n      <div class="col s12 m10 offset-m1 l6 offset-l3">\n        ', '\n      </div>\n    </div>\n  </div>'], ['<div class="container timeline">\n  <div class="row">\n    <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">\n      <form enctype="multipart/form-data" class="form-upload" id="formUpload" onsubmit=', '>\n        <div id="fileName" class="fileUpload btn btn-flat cyan">\n          <span><i class="fa fa-camera" aria-hidden="true"></i>', '</span>\n          <input name="picture" id="file" type="file" class="upload" onchange=', ' />\n        </div>\n        <button id="btnUpload" type="submit" class="btn btn-flat hide">', '</button>\n        <button id="btnCancel" type="button" class="btn btn-flat red hide" onclick=', '><i class="fa fa-times" aria-hidden="true"></i></button>\n      </form>\n    </div>\n  </div>\n    <div class="row">\n      <div class="col s12 m10 offset-m1 l6 offset-l3">\n        ', '\n      </div>\n    </div>\n  </div>']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -21738,30 +21738,41 @@ var yo = require('yo-yo');
 var layout = require('../layout');
 var picture = require('../pictures-card');
 var translate = require('../translate').message;
+var request = require('superagent');
 
 module.exports = function (pictures) {
-  var el = yo(_templateObject, translate('upload-picture'), onchange, translate('upload'), cancel, pictures.map(function (pic) {
+  var el = yo(_templateObject, onsubmit, translate('upload-picture'), onchange, translate('upload'), cancel, pictures.map(function (pic) {
     return picture(pic);
   }));
-
+  //Barajea entre true o false || 1-0  para quitar y/o agregar clase HIDE
   function toggleButtons() {
     document.getElementById('fileName').classList.toggle('hide');
     document.getElementById('btnUpload').classList.toggle('hide');
     document.getElementById('btnCancel').classList.toggle('hide');
   }
-
+  //evento de cancelar
   function cancel() {
     toggleButtons();
     document.getElementById('formUpload').reset();
   }
-
+  //cuando cambia de estado el input
   function onchange() {
     toggleButtons();
   }
+
+  function onsubmit(ev) {
+    ev.preventDefault();
+
+    var data = new FormData(this);
+    request.post('/api/pictures').send(data).end(function (err, res) {
+      console.log(arguments);
+    });
+  }
+
   return layout(el);
 };
 
-},{"../layout":376,"../pictures-card":377,"../translate":384,"yo-yo":368}],374:[function(require,module,exports){
+},{"../layout":376,"../pictures-card":377,"../translate":384,"superagent":360,"yo-yo":368}],374:[function(require,module,exports){
 'use strict';
 
 require('babel-polyfill');
