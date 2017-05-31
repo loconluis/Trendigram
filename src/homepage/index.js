@@ -3,9 +3,11 @@ const empty = require('empty-element');
 const template = require('./template');
 const title = require('title');
 let request = require('superagent');
+//axios manejador
+let axios = require('axios');
 let header = require('../header');
 
-page('/', header, loadPictures, function(ctx, next){
+page('/', header, loadPicturesAxios, function(ctx, next){
   title('Trendigram');
   const main = document.getElementById('main-container');
   empty(main).appendChild(template(ctx.pictures));
@@ -21,5 +23,18 @@ function loadPictures(ctx, next){
 
       ctx.pictures = res.body;
       next();
+    });
+}
+
+function loadPicturesAxios(ctx, next){
+  //promesas
+  axios
+    .get('/api/pictures')
+    .then(function(res){
+      ctx.pictures = res.data;
+      next();
+    })
+    .catch(function (err){
+      console.log(err);
     });
 }
